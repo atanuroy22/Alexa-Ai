@@ -74,7 +74,11 @@ def take_command():
 def process_command(voice_data):
         command = voice_data
         print(command)
-        if 'open website' in voice_data:
+        if 'wake up' in voice_data:
+            is_awake = True
+            speak("I am Online")
+
+        elif 'open website' in voice_data:
             speak("Sure, which website would you like me to open?")
             website = listen()
             if website:
@@ -121,7 +125,7 @@ def process_command(voice_data):
             exit()
         else:
         
-            speak('Please say again I did not understand.')
+            speak('')
 # Main loop to continuously listen for user's voice input
 while True:
     try:
