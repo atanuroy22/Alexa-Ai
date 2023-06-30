@@ -18,3 +18,5 @@ pip install pywhatkit
 pip install datetime
 pip install os
 pip install listener
+pip install keyboard
+pip install pyautogui
