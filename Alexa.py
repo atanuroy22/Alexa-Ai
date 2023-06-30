@@ -1,4 +1,5 @@
 import time
+import requests
 import speech_recognition as sr
 import pyttsx3
 import datetime
@@ -54,7 +55,7 @@ def listen2():
 
 speak("Hey")
 time.sleep(0.2)
-speak("I'm Alexa")
+speak("I'm alexa")
 time.sleep(0.5)
 speak("How can I assist you?")
 
@@ -178,7 +179,40 @@ def process_command(voice_data):
                 speak('Wait a moment')
             except:
                 speak('Please check your Internet')
-                
+        elif "weather" in voice_data:
+            try:
+                api_key="8ef61edcf1c576d65d836254e11ea420"
+                base_url="https://api.openweathermap.org/data/2.5/weather?"
+                speak("whats the city name")
+                city_name=listen()
+                complete_url=base_url+"appid="+api_key+"&q="+city_name
+                response = requests.get(complete_url)
+                x=response.json()
+                if x["cod"]!="404":
+                    y=x["main"]
+                    current_temperature = y["temp"]
+                    current_humidiy = y["humidity"]
+                    z = x["weather"]
+                    weather_description = z[0]["description"]
+                    current_temperature=current_temperature-273.15
+                    speak(" Temperature  is " +
+                          str(current_temperature) +"Degree Celcious" +
+                          "\n humidity in percentage is " +
+                          str(current_humidiy) +
+                          "\n description =\n" +
+                          str(weather_description))
+                    print(" Temperature  is " +
+                          str(current_temperature) +"Degree Celcious" +
+                          "\n humidity (in percentage) = " +
+                          str(current_humidiy) +
+                          "\n description =\n " +
+                          str(weather_description))
+    
+                else:
+                    speak(" City Not Found ")
+            except:
+                speak("Server Error")
+                        
         elif 'pause' in command:
             # Simulate spacebar press to pause/play
             try:    
