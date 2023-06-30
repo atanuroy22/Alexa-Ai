@@ -72,15 +72,20 @@ def process_command(voice_data):
             speak(f"Opening {website} in your browser.")
         else:
             speak("I'm sorry, please tell me again.")
-    elif 'open application' in voice_data:
-        speak("Which application?")
-        
-        application = listen2()
-        if application:
-            os.startfile(application)
-            speak(f"Opening {application}.")
-        else:
-            speak("I'm sorry, I didn't catch the name.")
+
+            #Open application or folder in c/user/atanu
+    elif 'open folder' in voice_data:
+        speak("Which folder or application in atanu folder?")
+        try:
+           application = listen2()
+           if application:
+               os.startfile(application)
+               speak(f"Opening {application}.")
+           else:
+               speak("I'm sorry, I didn't catch the name.")
+        except:
+            speak("file not found")
+    
     elif 'play' in command:
         command = command.replace('alexa', '')
         song = command.replace('play', '')
@@ -103,7 +108,7 @@ def process_command(voice_data):
 
     elif 'code' in voice_data:
         speak('Please Wait a Moment Wile Generating From an Ai' + voice_data.split('code')[1])
-        a = voice_data.lstrip("friday ")
+        a = voice_data.lstrip("alexa ")
         search_query = a.replace(" ", "+")
         url = 'https://www.perplexity.ai/search?q=' + search_query
         try:
@@ -114,7 +119,7 @@ def process_command(voice_data):
 
     elif 'write' in voice_data:
         speak('Please Wait a Moment Wile Generating From an Ai' + voice_data.split('write')[1])
-        a = voice_data.lstrip("friday ")
+        a = voice_data.lstrip("alexa ")
         search_query = a.replace(" ", "+")
         url = 'https://www.perplexity.ai/search?q=' + search_query
         try:
@@ -125,7 +130,7 @@ def process_command(voice_data):
             
     elif 'give' in voice_data:
         speak('Please Wait a Moment Wile Generating From an Ai' + voice_data.split('give')[1])
-        a = voice_data.lstrip("friday ")
+        a = voice_data.lstrip("alexa ")
         search_query = a.replace(" ", "+")
         url = 'https://www.perplexity.ai/search?q=' + search_query
         try:
@@ -136,7 +141,7 @@ def process_command(voice_data):
             
     elif 'tell' in voice_data:
         speak('Please Wait a Moment Wile Generating From an Ai' + voice_data.split('tell')[1])
-        a = voice_data.lstrip("friday ")
+        a = voice_data.lstrip("alexa ")
         search_query = a.replace(" ", "+")
         url = 'https://www.perplexity.ai/search?q=' + search_query
         try:
@@ -228,7 +233,80 @@ def process_command(voice_data):
         keyboard.press('q')
         keyboard.release('q')
         speak("Playback stopped.")
+
+    elif 'subtitle' in command:
+            # Simulate left arrow press to volume up
+            keyboard.press('c')
+            keyboard.release('c')
+            speak("Subtitle.")
         
+    elif 'mini' in command:
+        # Simulate left arrow press to volume up
+        keyboard.press('i')
+        keyboard.release('i')
+        speak("PIP mode.")    
+    elif 'volume down' in command:
+        # Simulate left arrow press to play volume down
+        keyboard.press('down')
+        keyboard.release('down')
+        speak("Volume down.")
+    elif 'search video' in command:
+        # Simulate left arrow press to play SEARCH
+        speak("Tell the video name?")
+        search_query = listen()
+        if search_query:
+            pywhatkit.playonyt(search_query)
+            speak("Searching " + search_query + ".")
+        else:
+            speak("I'm sorry, I didn't catch hear your voice.")
+
+            # open a drive folder navigation
+
+    # elif 'open' in voice_data and ('drive' in voice_data or 'folder' in voice_data or 'file' in voice_data):
+    #     speak("Sure, please provide the details of the drive, folder, and file.")
+    #     path = ['D:\\']
+    #     current_folder = ''
+    #     while True:
+    #         user_input = listen().lower()
+    #         if 'drive' in user_input:
+    #             speak("Tell the drive name?")
+    #             drive = listen2()
+    #             print('drive')
+    #             drive = user_input.split()[0]
+    #             current_folder = fr"{drive}:/"
+    #             path.append(current_folder)
+    #             speak(f"Opening {drive} drive.")
+    #         elif 'folder' in user_input:
+    #             speak("Tell the folder name?")
+    #             folder = listen2()
+    #             print(folder)
+    #             folder = ' '.join(user_input.split()[1:])
+    #             current_folder = os.path.join(current_folder, folder)
+    #             path.append(current_folder)
+    #             speak(f"Opening folder {folder}.")
+    #         elif 'back' in user_input:
+    #             if len(path) > 1:
+    #                 path.pop()
+    #                 current_folder = path[-1]
+    #                 speak("Going back to the previous folder.")
+    #             else:
+    #                 speak("You are already at the root folder.")
+    #         elif 'file' in user_input:
+    #             file_name = ' '.join(user_input.split()[1:])
+    #             file_path = os.path.join(current_folder, file_name)
+    #             if os.path.isfile(file_path):
+    #                 os.startfile(file_path)
+    #                 speak(f"Opening file {file_name}.")
+    #             else:
+    #                 speak("Sorry, the specified file was not found.")
+    #         elif 'stop' in user_input:
+    #             speak("Stopping folder navigation.")
+    #             break
+    #         else:
+    #             speak("Invalid command. Please try again.")
+
+
+    
     elif 'screenshot' in command:
         # Take a screenshot using prnt scrn
         keyboard.press('Alt')
